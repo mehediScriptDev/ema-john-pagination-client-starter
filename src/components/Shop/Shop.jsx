@@ -9,6 +9,7 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
     const [itemsPerPage,setItemsPerPage] = useState(10);
+    const [currentPage,setCurrentPage] = useState(0);
     const {count} = useLoaderData();
     const totalPages = Math.ceil(count / itemsPerPage);
     const pages = [...Array(totalPages).keys()]
@@ -71,7 +72,19 @@ const Shop = () => {
     const itemsHandler = e=>{
         const val = parseInt(e.target.value);
        setItemsPerPage(val);
+       setCurrentPage(0);
         
+    }
+
+    const handlePrev=()=>{
+        if(currentPage>0){
+            setCurrentPage(currentPage-1)
+        }
+    }
+    const handleNext=()=>{
+        if(currentPage<pages.length-1){
+            setCurrentPage(currentPage+1)
+        }
     }
 
     return (
@@ -95,14 +108,18 @@ const Shop = () => {
                     </Link>
                 </Cart>
             </div>
+            
             <div className='pagination'>
-                {pages.map(page=><button>{page}</button>)}
+               
+            <button onClick={handlePrev}>Prev</button>
+                {pages.map(page=><button className={currentPage===page && 'selected'} onClick={()=>setCurrentPage(page)}>{page}</button>)}
                 <select value={itemsPerPage} onChange={itemsHandler}>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="50">50</option>
                 </select>
+                <button onClick={handleNext}>Next</button>
             </div>
 
         </div>

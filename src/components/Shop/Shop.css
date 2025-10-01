@@ -28,5 +28,10 @@
 .pagination{
     display: flex;
     justify-content: center;
+    gap: 5px;
     margin-bottom: 20px;
+}
+.pagination .selected{
+    background-color: #FF9900;
+    color: white;
 }
