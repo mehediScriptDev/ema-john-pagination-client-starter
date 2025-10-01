@@ -3,11 +3,18 @@ import { addToDb, deleteShoppingCart, getShoppingCart } from '../../utilities/fa
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
+    const [itemsPerPage,setItemsPerPage] = useState(10);
+    const {count} = useLoaderData();
+    const totalPages = Math.ceil(count / itemsPerPage);
+    const pages = [...Array(totalPages).keys()]
+     
+
+    
 
     useEffect(() => {
         fetch('http://localhost:5000/products')
@@ -61,6 +68,12 @@ const Shop = () => {
         deleteShoppingCart();
     }
 
+    const itemsHandler = e=>{
+        const val = parseInt(e.target.value);
+       setItemsPerPage(val);
+        
+    }
+
     return (
         <div className='shop-container'>
             <div className="products-container">
@@ -82,6 +95,16 @@ const Shop = () => {
                     </Link>
                 </Cart>
             </div>
+            <div className='pagination'>
+                {pages.map(page=><button>{page}</button>)}
+                <select value={itemsPerPage} onChange={itemsHandler}>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+
         </div>
     );
 };
