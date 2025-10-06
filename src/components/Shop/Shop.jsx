@@ -119,7 +119,7 @@ const Shop = () => {
                     <option value="20">20</option>
                     <option value="50">50</option>
                 </select>
-                <button onClick={handleNext}>Next</button>
+                <button onClick={handleNext}>Next </button>
             </div>
 
         </div>
